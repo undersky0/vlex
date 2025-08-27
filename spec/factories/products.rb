@@ -1,9 +1,22 @@
 FactoryBot.define do
   factory :product do
-    id { 1 }
-    name { "MyString" }
-    description { "MyText" }
-    created_at { "2025-08-26 16:37:09" }
-    updated_at { "2025-08-26 16:37:09" }
+    sequence(:name) { |n| "Product #{n}" }
+    sequence(:description) { |n| "Description for Product #{n}" }
+
+    trait :with_subscription do
+      transient do
+        account { nil }
+        license_count { 5 }
+      end
+
+      after(:create) do |product, evaluator|
+        if evaluator.account
+          create(:subscription,
+                 product: product,
+                 account: evaluator.account,
+                 number_of_licenses: evaluator.license_count)
+        end
+      end
+    end
   end
 end

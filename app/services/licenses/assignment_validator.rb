@@ -29,6 +29,8 @@ class Licenses::AssignmentValidator < ActiveInteraction::Base
     assigned_count = account.license_assignments.where(product: product).count
     subscription = account.subscriptions.find_by(product: product)
 
+    return unless subscription # If no subscription, this will be caught by validate_subscription_for_product
+
     if assigned_count >= subscription.number_of_licenses
       errors.add(:base, "No available licenses for #{product.name}")
     end

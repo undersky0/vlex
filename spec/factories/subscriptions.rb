@@ -1,12 +1,18 @@
 FactoryBot.define do
   factory :subscription do
-    id { 1 }
-    account_id { 1 }
-    product_id { 1 }
-    number_of_licenses { 1 }
-    issued_at { "2025-08-26 16:37:09" }
-    expires_at { "2025-08-26 16:37:09" }
-    created_at { "2025-08-26 16:37:09" }
-    updated_at { "2025-08-26 16:37:09" }
+    association :account
+    association :product
+    number_of_licenses { 5 }
+    issued_at { 1.month.ago }
+    expires_at { 1.year.from_now }
+
+    trait :expired do
+      issued_at { 2.years.ago }
+      expires_at { 1.year.ago }
+    end
+
+    trait :with_many_licenses do
+      number_of_licenses { 100 }
+    end
   end
 end
