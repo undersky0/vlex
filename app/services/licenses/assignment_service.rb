@@ -6,7 +6,7 @@ class Licenses::AssignmentService < ActiveInteraction::Base
   def execute
     license_assignment_ids = user_ids.product(product_ids)
 
-    license_assignment_ids.each do |user_id, product_id|
+    license_assignment_ids.map do |user_id, product_id|
       user = account.users.find_by(id: user_id)
       product = account.products.find_by(id: product_id)
 
@@ -32,6 +32,7 @@ class Licenses::AssignmentService < ActiveInteraction::Base
       unless license_assignment.save
         errors.merge!("Failed to assign #{product.name} to #{user.name}: #{license_assignment.errors.full_messages.join(', ')}")
       end
+      license_assignment
     end
   end
 end

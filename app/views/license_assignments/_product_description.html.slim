@@ -1,0 +1,5 @@
+.p-4.hover:bg-gray-50.transition-colors.relative id="product_#{product.id}_description"
+  - availability = product.license_availability_for(account)
+  .flex
+    = check_box_tag "product_ids[]", product.id, selected, id: "product_#{product.id}", class: "peer appearance-none w-full h-full bg-cover hover:bg-gray-300 focus:bg-gray-300 checked:bg-gray-500"
+    = label_tag("product_#{product.id}", "#{product.name} (#{availability[:available]}/#{availability[:total]})", class: "absolute text-md text-black inset-0 w-full h-full text-left font-medium  peer-checked:bg-gray-500")

@@ -49,28 +49,32 @@ class LicenseAssignmentsController < ApplicationController
   end
 
   def handle_assign_licenses
-    license_assignment = Licenses::AssignmentService.run(
+    @license_assignment_service = Licenses::AssignmentService.run(
       account: @account,
       user_ids: params[:user_ids],
       product_ids: params[:product_ids]
     )
 
-    if license_assignment.errors.any?
-      flash[:alert] = license_assignment.errors.full_messages.join("\n")
+    @updated_licenses = @license_assignment_service.result&.compact
+
+    if @license_assignment_service.errors.any?
+      flash[:alert] = @license_assignment_service.errors.full_messages.join("\n")
     else
       flash[:notice] = "Licenses assigned successfully."
     end
   end
 
   def handle_unassign_licenses
-    license_unassignment = Licenses::UnassignmentService.run(
+    @license_unassignment_service = Licenses::UnassignmentService.run(
       account: @account,
       user_ids: params[:user_ids],
       product_ids: params[:product_ids]
     )
 
-    if license_unassignment.errors.any?
-      flash[:alert] = license_unassignment.errors.full_messages.join("\n")
+    @updated_licenses = @license_unassignment_service.result&.compact
+
+    if @license_unassignment_service.errors.any?
+      flash[:alert] = @license_unassignment_service.errors.full_messages.join("\n")
     else
       flash[:notice] = "Licenses unassigned successfully."
     end

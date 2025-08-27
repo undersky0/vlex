@@ -20,11 +20,7 @@
           - if @products_with_subscriptions.any?
             .border.rounded
               - @products_with_subscriptions.each do |product|
-                .p-4.hover:bg-gray-50.transition-colors.relative
-                  .flex
-                    = check_box_tag "product_ids[]", product.id, false, id: "product_#{product.id}", class: "peer appearance-none w-full h-full bg-cover hover:bg-gray-300 focus:bg-gray-300 checked:bg-gray-500"
-                    = label_tag("product_#{product.id}", product.name, class: "absolute text-md text-black inset-0 w-full h-full text-left font-medium  peer-checked:bg-gray-500")
-
+                = render "product_description", product: product, account: @account, selected: false
           - else
             .text-center.py-8.text-gray-500
               p No products with active subscriptions found.

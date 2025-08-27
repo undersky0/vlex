@@ -48,11 +48,32 @@ class UsersController < ApplicationController
 
   # DELETE /accounts/:account_id/users/:id
   def destroy
-    @user.destroy!
+    begin
+      # Remove the user from this specific account
+      account_user = @account.account_users.find_by(user: @user)
+      if account_user
+        account_user.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to account_users_path(@account), notice: "User was successfully removed from the account." }
-      format.json { head :no_content }
+        # If user is not associated with any other accounts, delete the user completely
+        if @user.accounts.empty?
+          @user.destroy!
+          message = "User was successfully deleted."
+        else
+          message = "User was successfully removed from the account."
+        end
+      else
+        message = "User is not associated with this account."
+      end
+
+      respond_to do |format|
+        format.html { redirect_to account_users_path(@account), notice: message }
+        format.json { head :no_content }
+      end
+    rescue ActiveRecord::InvalidForeignKey => e
+      respond_to do |format|
+        format.html { redirect_to account_users_path(@account), alert: "Cannot delete user: they have active license assignments. Please unassign all licenses first." }
+        format.json { render json: { error: "Cannot delete user with active license assignments" }, status: :unprocessable_entity }
+      end
     end
   end
 

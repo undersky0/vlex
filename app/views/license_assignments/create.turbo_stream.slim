@@ -1,1 +1,6 @@
 = render_turbo_flash
+
+/ Update the product description to reflect new availability
+- if @updated_licenses.present?
+  - @updated_licenses.each do |license_assignment|
+    = turbo_stream.replace "product_#{license_assignment.product.id}_description", partial: "product_description", locals: { product: license_assignment.product, account: license_assignment.account, selected: true }

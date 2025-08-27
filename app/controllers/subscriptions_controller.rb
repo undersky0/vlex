@@ -4,7 +4,7 @@ class SubscriptionsController < ApplicationController
 
   def index
     @subscriptions = @account.subscriptions.includes(:product)
-    @products = @account.products
+    @products = Product.all
   end
 
   def show
@@ -12,7 +12,7 @@ class SubscriptionsController < ApplicationController
 
   def new
     @subscription = @account.subscriptions.build
-    @products = @account.products
+    @products = Product.all
   end
 
   def create
@@ -22,7 +22,7 @@ class SubscriptionsController < ApplicationController
       flash[:notice] = "Subscription created successfully."
       redirect_to account_subscriptions_path(@account)
     else
-      @products = @account.products
+      @products = Product.all
       render :new
     end
   end
@@ -36,7 +36,7 @@ class SubscriptionsController < ApplicationController
       flash[:notice] = "Subscription updated successfully."
       redirect_to account_subscriptions_path(@account)
     else
-      @products = @account.products
+      @products = Product.all
       render :edit
     end
   end
