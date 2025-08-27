@@ -5,7 +5,7 @@ div id="#{dom_id user}"
       p.text-gray-600 = user.email
     .flex.items-center
       - if user.account_users.any?
-        - roles = user.account_users.first.role_list
+        - roles = user.account_users.first&.roles&.keys
         - if roles.any?
           .inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium.bg-blue-100.text-blue-800
             = roles.join(", ").titleize

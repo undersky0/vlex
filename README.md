@@ -4,6 +4,9 @@ requires rails 8, ruby 3.3, sqlite3
 rails db:migrate
 rails db:setup
 
+START
+```bin/dev
+
 
 # Notes
   It was a lovely test, thank you very much. Plase let me know what you think.
@@ -13,6 +16,8 @@ rails db:setup
   Some choices that I made outside of the scope:
 
   For assing and unassingn it's using turbo streams to do it without page reloads.
+
+  I used rspec for tests
 
   Questionable choices:
 
