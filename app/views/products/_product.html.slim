@@ -1,0 +1,11 @@
+div id="#{dom_id product}"
+  h3.text-xl.font-semibold.text-gray-900.mb-3 = product.name
+  .space-y-3
+    = truncate(product.description, length: 120)
+
+    .flex
+      .font-medium ID:&nbsp;
+      = product.id
+    .flex
+      .font-medium Created:&nbsp;
+      = product.created_at.strftime("%b %d, %Y")

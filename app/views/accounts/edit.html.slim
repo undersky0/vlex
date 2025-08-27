@@ -1,0 +1,11 @@
+.max-w-2xl.mx-auto.p-6
+  .mb-8
+    h1.text-3xl.font-bold.text-gray-900.mb-2 Edit Account
+    p.text-gray-600 Update the account information below.
+
+  .bg-white.rounded-lg.shadow-md.p-6
+    == render "form", account: @account
+
+  .mt-6.flex.space-x-4
+    = link_to "View Account", @account, class: "text-blue-600 hover:text-blue-800 font-medium"
+    = link_to "Back to Accounts", accounts_path, class: "text-gray-600 hover:text-gray-800 font-medium"

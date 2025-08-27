@@ -1,0 +1,10 @@
+.max-w-2xl.mx-auto.p-6
+  .mb-8
+    h1.text-3xl.font-bold.text-gray-900.mb-2 Add Subscription to #{@account.name}
+    p.text-gray-600 Create a new product subscription for this account.
+
+  .bg-white.rounded-lg.shadow-md.p-6
+    == render "form", subscription: @subscription
+
+  .mt-6
+    = link_to "Back to Subscriptions", account_subscriptions_path(@account), class: "text-gray-600 hover:text-gray-800 font-medium"

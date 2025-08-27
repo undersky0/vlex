@@ -1,0 +1,28 @@
+div id="#{dom_id subscription}"
+  .mb-3
+    h3.text-xl.font-semibold.text-gray-900 = subscription.product.name
+    .flex.space-x-2
+      .inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium.bg-green-100.text-green-800
+        = "#{subscription.number_of_licenses} licenses"
+      - if subscription.expires_at > Time.current
+        .inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium.bg-blue-100.text-blue-800 Active
+      - else
+        .inline-flex.items-center.px-2.py-1.rounded-full.text-xs.font-medium.bg-red-100.text-red-800 Expired
+
+  .space-y-2.mt-3
+    .grid.grid-cols-1.gap-2.text-sm.text-gray-600
+      .flex
+        .font-medium Issued:&nbsp;
+        .text-gray-900 = subscription.issued_at.strftime("%b %d, %Y")
+      .flex
+        .font-medium Expires:&nbsp;
+        .text-gray-900 = subscription.expires_at.strftime("%b %d, %Y")
+      - days_remaining = (subscription.expires_at.to_date - Date.current).to_i
+      - if days_remaining > 0
+        .flex
+          .font-medium Remaining:&nbsp;
+          .text-green-600 = "#{days_remaining} days"
+      - else
+        .flex
+          .font-medium Status:&nbsp;
+          .text-red-600 = "Expired #{days_remaining.abs} days ago"

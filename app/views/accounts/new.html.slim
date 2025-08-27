@@ -1,0 +1,10 @@
+.max-w-2xl.mx-auto.p-6
+  .mb-8
+    h1.text-3xl.font-bold.text-gray-900.mb-2 Create New Account
+    p.text-gray-600 Add a new account to the system.
+
+  .bg-white.rounded-lg.shadow-md.p-6
+    == render "form", account: @account
+
+  .mt-6
+    = link_to "Back to Accounts", accounts_path, class: "text-gray-600 hover:text-gray-800 font-medium"

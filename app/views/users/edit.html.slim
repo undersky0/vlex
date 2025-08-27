@@ -1,0 +1,10 @@
+.max-w-2xl.mx-auto.p-6
+  .mb-8
+    h1.text-3xl.font-bold.text-gray-900.mb-2 Edit User
+    p.text-gray-600 Update user information for #{@account.name}.
+
+  .bg-white.rounded-lg.shadow-md.p-6
+    == render "form", user: @user
+
+  .mt-6.flex.space-x-4
+    = link_to "Back to Users", account_users_path(@account), class: "text-gray-600 hover:text-gray-800 font-medium"

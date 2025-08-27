@@ -1,0 +1,67 @@
+= turbo_stream_from @account
+
+.max-w-7xl.mx-auto.p-6
+  .mb-8
+    .flex.items-center.justify-between
+      div
+        h1.text-3xl.font-bold.text-gray-900.mb-2 License Management for #{@account.name}
+        p.text-gray-600 Assign and manage product licenses for users in this account.
+      .flex.items-center.space-x-3
+        = link_to "Back to Account", @account, class: "text-gray-600 hover:text-gray-800 font-medium"
+
+  = form_with url: account_license_assignments_path(@account), method: :post, local: true, class: "mb-8" do |form|
+    .bg-white.rounded-lg.shadow-md.p-6
+      h3.text-lg.font-semibold.text-gray-900.mb-4 License Management
+
+      .grid.grid-cols-5.gap-8
+        / Products Column
+        .col-span-2.space-y-4
+          h4.text-md.font-medium.text-gray-800.mb-3 Available Products & Licenses
+          - if @products_with_subscriptions.any?
+            .border.rounded
+              - @products_with_subscriptions.each do |product|
+                .p-4.hover:bg-gray-50.transition-colors.relative
+                  .flex
+                    = check_box_tag "product_ids[]", product.id, false, id: "product_#{product.id}", class: "peer appearance-none w-full h-full bg-cover hover:bg-gray-300 focus:bg-gray-300 checked:bg-gray-500"
+                    = label_tag("product_#{product.id}", product.name, class: "absolute text-md text-black inset-0 w-full h-full text-left font-medium  peer-checked:bg-gray-500")
+
+          - else
+            .text-center.py-8.text-gray-500
+              p No products with active subscriptions found.
+              = link_to "Manage Subscriptions", account_subscriptions_path(@account), class: "text-blue-600 hover:text-blue-800"
+
+        .col-span-1.flex.flex-col.space-y-2.h-full.justify-center.w-32.mx-auto
+          = form.submit "Assign Selected Licenses", name: "commit", value: "assign", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+          = form.submit "Unassign Selected", name: "commit", value: "unassign", class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+
+
+        / Users Column
+        .col-span-2.space-y-4
+          h4.text-md.font-medium.text-gray-800.mb-3 Users in Account
+          - if @users.any?
+            .border.rounded
+              - @users.each do |user|
+                .p-4.hover:bg-gray-50.transition-colors.relative
+                  .flex
+                    = check_box_tag "user_ids[]", user.id, false, id: "user_#{user.id}", class:  "peer appearance-none w-full h-full bg-cover hover:bg-gray-300 focus:bg-gray-300 checked:bg-gray-500"
+                    = label_tag("user_#{user.id}", user.name, class: "absolute text-md text-black inset-0 w-full h-full text-left font-medium  peer-checked:bg-gray-500")
+          - else
+            .text-center.py-8.text-gray-500
+              p No users found in this account.
+              = link_to "Add Users", account_users_path(@account), class: "text-blue-600 hover:text-blue-800"
+
+  / Current License Assignments Section
+  .bg-white.rounded-lg.shadow-md.p-6
+    .flex.items-center.justify-between.mb-6
+      h3.text-lg.font-semibold.text-gray-900 Current License Assignments
+    .overflow-x-auto
+      table.min-w-full.divide-y.divide-gray-200
+        thead.bg-gray-50
+          tr
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider User
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Product
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Assigned Date
+            th.px-6.py-3.text-left.text-xs.font-medium.text-gray-500.uppercase.tracking-wider Actions
+        tbody.bg-white.divide-y.divide-gray-200 id="license_assignments"
+          - @license_assignments.each do |license_assignment|
+            = render partial: "license_assignments/license_assignment", locals: { license_assignment: license_assignment }

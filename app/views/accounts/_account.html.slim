@@ -1,0 +1,9 @@
+div id="#{dom_id account}"
+  h3.text-xl.font-semibold.text-gray-900.mb-3 = account.name
+  .space-y-2
+    .flex.items-center.text-sm.text-gray-600
+      .w-16.font-medium ID:
+      .text-gray-900 = account.id
+    .flex.items-center.text-sm.text-gray-600
+      .w-16.font-medium Created:
+      .text-gray-900 = account.created_at.strftime("%B %d, %Y")

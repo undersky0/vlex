@@ -1,0 +1,10 @@
+.max-w-2xl.mx-auto.p-6
+  .mb-8
+    h1.text-3xl.font-bold.text-gray-900.mb-2 Edit Subscription
+    p.text-gray-600 Update subscription details for #{@account.name}.
+
+  .bg-white.rounded-lg.shadow-md.p-6
+    == render "form", subscription: @subscription
+
+  .mt-6.flex.space-x-4
+    = link_to "Back to Subscriptions", account_subscriptions_path(@account), class: "text-gray-600 hover:text-gray-800 font-medium"

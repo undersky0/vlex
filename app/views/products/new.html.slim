@@ -1,0 +1,10 @@
+.max-w-2xl.mx-auto.p-6
+  .mb-8
+    h1.text-3xl.font-bold.text-gray-900.mb-2 Create New Product
+    p.text-gray-600 Add a new product to the system.
+
+  .bg-white.rounded-lg.shadow-md.p-6
+    == render "form", product: @product
+
+  .mt-6
+    = link_to "Back to Products", products_path, class: "text-gray-600 hover:text-gray-800 font-medium"

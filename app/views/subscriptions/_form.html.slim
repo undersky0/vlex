@@ -1,0 +1,32 @@
+= form_with(model: [@account, subscription], class: "space-y-6", data: {turbo: false}) do |form|
+  - if subscription.errors.any?
+    .bg-red-100.border.border-red-400.text-red-700.px-4.py-3.rounded.mb-4
+      h2.font-bold.mb-2 = "#{pluralize(subscription.errors.count, "error")} prohibited this subscription from being saved:"
+      ul.list-disc.list-inside
+        - subscription.errors.each do |error|
+          li = error.full_message
+
+  .space-y-4
+    div
+      = form.label :product_id, "Product", class: "block text-sm font-medium text-gray-700 mb-1"
+      = form.select :product_id, options_from_collection_for_select(@products, :id, :name, subscription.product_id), { prompt: "Select a product" }, { class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" }
+
+    div
+      = form.label :number_of_licenses, class: "block text-sm font-medium text-gray-700 mb-1"
+      = form.number_field :number_of_licenses, min: 1, class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500", placeholder: "Enter number of licenses"
+
+    .grid.grid-cols-2.gap-4
+      div
+        = form.label :issued_at, "Issue Date", class: "block text-sm font-medium text-gray-700 mb-1"
+        = form.datetime_local_field :issued_at, value: subscription.issued_at&.strftime("%Y-%m-%dT%H:%M"), class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+
+      div
+        = form.label :expires_at, "Expiry Date", class: "block text-sm font-medium text-gray-700 mb-1"
+        = form.datetime_local_field :expires_at, value: subscription.expires_at&.strftime("%Y-%m-%dT%H:%M"), class: "block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+
+    .bg-gray-50.p-4.rounded-lg
+      h4.text-sm.font-medium.text-gray-900.mb-2 Subscription Details
+      p.text-sm.text-gray-600 This subscription will be created for: #{@account.name}
+
+    div
+      = form.submit class: "w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"

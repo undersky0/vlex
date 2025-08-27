@@ -1,0 +1,11 @@
+nav.bg-white.shadow-sm.border-b.border-gray-200
+  .max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8
+    .flex.justify-between.h-16
+      .flex.items-center
+        = link_to root_path, class: "flex items-center" do
+          h1.text-xl.font-bold.text-gray-900 Vlex
+      .flex.items-center.space-x-4
+        = link_to "Accounts", accounts_path, class: "text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        = link_to "Products", products_path, class: "text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
+        span.text-gray-400 |
+        span.text-sm.text-gray-600 Administrator

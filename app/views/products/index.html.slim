@@ -1,0 +1,32 @@
+- if notice
+  .bg-green-100.border.border-green-400.text-green-700.px-4.py-3.rounded.mb-4
+    = notice
+
+.max-w-6xl.mx-auto.p-6
+  .mb-8
+    h1.text-3xl.font-bold.text-gray-900.mb-2 Product Management
+    p.text-gray-600 Manage your products and their descriptions below.
+
+  .mb-6
+    = link_to "New Product", new_product_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
+
+  .mb-6
+    h2.text-2xl.font-semibold.text-gray-800 Products (#{@products.count})
+
+  - if @products.any?
+    .grid.gap-6.md:grid-cols-2.lg:grid-cols-3
+      - @products.each do |product|
+        .bg-white.rounded-lg.shadow-md.hover:shadow-lg.transition-shadow.duration-200.p-6.border.border-gray-200
+          == render product
+          .mt-4.flex.space-x-3
+            = link_to "View Details", product, class: "text-blue-600 hover:text-blue-800 font-medium"
+            = link_to "Edit", edit_product_path(product), class: "text-green-600 hover:text-green-800 font-medium"
+  - else
+    .text-center.py-12
+      .text-gray-400.mb-4
+        svg.mx-auto.h-16.w-16 fill="currentColor" viewbox="0 0 20 20"
+          path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+      h3.text-lg.font-medium.text-gray-900.mb-2 No products found
+      p.text-gray-500 Create your first product to get started!
+      .mt-6
+        = link_to "Create Product", new_product_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-200"
